@@ -17,15 +17,15 @@ integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7
 <ul class="todo-list">
     <% for(var i = 0; i <todos.length; i++){%>
         <% if (todos[i].status == 0) {%> 
-<li class="todo-list-item">
+<li class="todo-list-item" id="card-<%=todos[i].id%>">
     
 <div class="todo-list-item-name"> <%=todos[i].task%></div>
 
 <a href="" class="edit">
 <span class="fas fa-edit"></span>
 </a>
-<a href="" class="remove">
-<span class="fas fa-times"></span>
+<a href="#" class="remove" >
+<span class="fas fa-times" onclick='moveTask(event, "<%=todos[i].id%>")'></span>
 </a>
 </li>
 <%} %>
@@ -34,3 +34,21 @@ integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7
 </div>
 </div>
 </body>
+<script>
+    function moveTask(event, id){
+        var urlencoded = new URLSearchParams();
+        urlencoded.append("id", id);
+        fetch("http://localhost:3000/moveTaskDone",
+        {
+            method: "PUT",
+            headers: {"Content-Type": "application/x-www-form-urlencoded"},
+            body: urlencoded
+        
+            
+        }).then(response => response.json())
+        .then(result => {
+            console.log(result['id']);
+            document.getElementById("card-"+result['id']).remove();
+        });
+}
+</script>
