@@ -25,7 +25,7 @@ app.set("view engine", "ejs")
 
 app.get('/',(req, res) => {
     db.select("*").from("todo").orderBy("id", "desc").then(data =>{
-        res.render("todo.ejs", { todos: data })
+        res.render("todo.ejs", { todos: data, good_job:'thank you very much' })
     });
     
 })
